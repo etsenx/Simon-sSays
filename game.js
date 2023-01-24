@@ -33,12 +33,23 @@ function nextSequence() {
   let randomNumber = Math.floor(Math.random() * 4);
   let randomChosenColour = buttonColours[randomNumber];
   gamePattern.push(randomChosenColour);
+  console.log(gamePattern.length);
 
-  $("#" + randomChosenColour)
-    .fadeIn(100)
-    .fadeOut(100)
-    .fadeIn(100);
-  playSound(randomChosenColour);
+  let i = 0;
+  function showLoop() {
+    setTimeout(function () {
+      $("#" + gamePattern[i])
+        .fadeIn(100)
+        .fadeOut(100)
+        .fadeIn(100);
+      playSound(gamePattern[i]);
+      i++;
+      if (i < gamePattern.length) {
+        showLoop();
+      }
+    }, 500);
+  }
+  showLoop();
 
   level++;
   $("h1").html("Level " + level);
